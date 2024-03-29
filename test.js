@@ -12,7 +12,7 @@ const myRequest = {
 
 
 $task.fetch(myRequest).then(response => {
-    message = response ? stringify_info(response.body) : "";
+    message = response ? stringify_info(JSON.stringify(response.body)) : "";
     $done({"Title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
 }, reason => {
     message = `🛑 查询超时`
