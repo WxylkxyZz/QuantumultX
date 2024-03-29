@@ -21,10 +21,10 @@ const flags = new Map([["AC", "🇦🇨"], ["AE", "🇦🇪"], ["AF", "🇦🇫"
 function stringify_info(res) {
     res = JSON.parse(res);
     return `
-  "IP": ${res["ip"]}\n
-  "ISP": ${res["isp"]}\n
-  "City": ${res["city"]}\n
-  "Region": ${res["region"]}\n
+  "IP": ${res["ip"]}<br>
+  "ISP": ${res["isp"]}<br>
+  "City": ${res["city"]}<br>
+  "Region": ${res["region"]}<br>
   "Country": ${res["country"]}${flags.get(res["country_code"].toUpperCase())}
   `;
 }
