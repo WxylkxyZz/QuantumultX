@@ -23,10 +23,8 @@
   const paran = ["IP","ISP","地区","城市"]
   $task.fetch(myRequest).then(response => {
     message = response? response.body : ""
-    $notify("Title", "Subtitle", response.body); // Success!
-    $done();
+    $done({"title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
 }, reason => {
     // reason.error
-    $notify("Title", "Subtitle", reason.error); // Error!
-    $done();
+    $done({"title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
 });
