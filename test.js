@@ -15,8 +15,8 @@
   const paran = ["IP","ISP","地区","城市"]
   $task.fetch(myRequest).then(response => {
     message = response? response.body : ""
-    $done({"title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
+    $done($environment.params);
 }, reason => {
     // reason.error
-    $done({"title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
+    $done({$environment.params);
 });
