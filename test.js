@@ -8,7 +8,7 @@ const myRequest = {
 
 
 $task.fetch(myRequest).then(response => {
-    message = response ? typeof(response.body) : "";
+    message = response ? stringify_info(response.body) : "";
     $done({"Title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
 }, reason => {
     message = `🛑 查询超时`
