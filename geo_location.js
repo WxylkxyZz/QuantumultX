@@ -1,40 +1,37 @@
-async function geoInfo() {
-  const headers = {
-    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-    'accept-language': 'zh-CN,zh;q=0.9,en;q=08',
-    'cache-control': 'no-cache',
-    'pragma': 'no-cache',
-    'sec-ch-ua': '"Not A Brand";v="99", "Chromium";v="101", "Google Chrome";v="101"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
-    'sec-fetch-dest': 'document',
-    'sec-fetch-mode': 'navigate',
-    'sec-fetch-site': 'none',
-    'sec-fetch-user': '?1',
-    'upgrade-insecure-requests': '1',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.0.0 Safari/537.36',
-  };
+let message = "";
+const url = "https: //api.ip.sb/geoip";
+const headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36'};
+const method = "GET";
+const myRequest = {
+    url: url,
+    method: method,
+    headers: headers,
+    opts: {policy: $environment.params},
+    timeout: 5000
+};
 
-  try {
-    const response = await fetch('https://api.ip.sb/geoip', { headers });
-    const data = await response.json();
 
-    const IP_INFO_PARAMS = [data.ip, data.isp, data.city, data.country, data.country_code, data.continent_code];
+$task.fetch(myRequest).then(response => {
+    message = response ? json2info(response.body, paras) : "";
+    $notify({"Title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
+    $done();
+}, reason => {
+    message = `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: bold;"></br></br>🛑 查询超时</p>`
+    $done({"title": "🔎 IP.SB 查询结果", "htmlMessage": message});
+});
 
-    console.log('-' * 30);
-    console.log(' IP.SB 查询结果');
-    console.log(`IP: ${IP_INFO_PARAMS[0]}`);
-    console.log(`isp: ${IP_INFO_PARAMS[1]}`);
-    console.log(`city: ${IP_INFO_PARAMS[2]}`);
-    console.log(`country: ${IP_INFO_PARAMS[3]}`);
-    console.log(`country_code: ${IP_INFO_PARAMS[4]}`);
-    console.log(`continent_code: ${IP_INFO_PARAMS[5]}`);
-    console.log('-' * 30);
-  } catch (error) {
-    console.log('-' * 30);
-    console.error('结果查询超时');
-    console.log('-' * 30);
-  }
+const paras = ["ip", "isp", "city", "region", "country", "country_code"]
+const paran = ["IP", "ISP", "城市", "地区", "国家", "flag"]
+var flags = new Map([["AC", "🇦🇨"], ["AE", "🇦🇪"], ["AF", "🇦🇫"], ["AI", "🇦🇮"], ["AL", "🇦🇱"], ["AM", "🇦🇲"], ["AQ", "🇦🇶"], ["AR", "🇦🇷"], ["AS", "🇦🇸"], ["AT", "🇦🇹"], ["AU", "🇦🇺"], ["AW", "🇦🇼"], ["AX", "🇦🇽"], ["AZ", "🇦🇿"], ["BA", "🇧🇦"], ["BB", "🇧🇧"], ["BD", "🇧🇩"], ["BE", "🇧🇪"], ["BF", "🇧🇫"], ["BG", "🇧🇬"], ["BH", "🇧🇭"], ["BI", "🇧🇮"], ["BJ", "🇧🇯"], ["BM", "🇧🇲"], ["BN", "🇧🇳"], ["BO", "🇧🇴"], ["BR", "🇧🇷"], ["BS", "🇧🇸"], ["BT", "🇧🇹"], ["BV", "🇧🇻"], ["BW", "🇧🇼"], ["BY", "🇧🇾"], ["BZ", "🇧🇿"], ["CA", "🇨🇦"], ["CF", "🇨🇫"], ["CH", "🇨🇭"], ["CK", "🇨🇰"], ["CL", "🇨🇱"], ["CM", "🇨🇲"], ["CN", "🇨🇳"], ["CO", "🇨🇴"], ["CP", "🇨🇵"], ["CR", "🇨🇷"], ["CU", "🇨🇺"], ["CV", "🇨🇻"], ["CW", "🇨🇼"], ["CX", "🇨🇽"], ["CY", "🇨🇾"], ["CZ", "🇨🇿"], ["DE", "🇩🇪"], ["DG", "🇩🇬"], ["DJ", "🇩🇯"], ["DK", "🇩🇰"], ["DM", "🇩🇲"], ["DO", "🇩🇴"], ["DZ", "🇩🇿"], ["EA", "🇪🇦"], ["EC", "🇪🇨"], ["EE", "🇪🇪"], ["EG", "🇪🇬"], ["EH", "🇪🇭"], ["ER", "🇪🇷"], ["ES", "🇪🇸"], ["ET", "🇪🇹"], ["EU", "🇪🇺"], ["FI", "🇫🇮"], ["FJ", "🇫🇯"], ["FK", "🇫🇰"], ["FM", "🇫🇲"], ["FO", "🇫🇴"], ["FR", "🇫🇷"], ["GA", "🇬🇦"], ["GB", "🇬🇧"], ["HK", "🇭🇰"], ["HU", "🇭🇺"], ["ID", "🇮🇩"], ["IE", "🇮🇪"], ["IL", "🇮🇱"], ["IM", "🇮🇲"], ["IN", "🇮🇳"], ["IS", "🇮🇸"], ["IT", "🇮🇹"], ["JP", "🇯🇵"], ["KR", "🇰🇷"], ["LU", "🇱🇺"], ["MO", "🇲🇴"], ["MX", "🇲🇽"], ["MY", "🇲🇾"], ["NL", "🇳🇱"], ["PH", "🇵🇭"], ["RO", "🇷🇴"], ["RS", "🇷🇸"], ["RU", "🇷🇺"], ["RW", "🇷🇼"], ["SA", "🇸🇦"], ["SB", "🇸🇧"], ["SC", "🇸🇨"], ["SD", "🇸🇩"], ["SE", "🇸🇪"], ["SG", "🇸🇬"], ["TH", "🇹🇭"], ["TN", "🇹🇳"], ["TO", "🇹🇴"], ["TR", "🇹🇷"], ["TV", "🇹🇻"], ["TW", "🇨🇳"], ["UK", "🇬🇧"], ["UM", "🇺🇲"], ["US", "🇺🇸"], ["UY", "🇺🇾"], ["UZ", "🇺🇿"], ["VA", "🇻🇦"], ["VE", "🇻🇪"], ["VG", "🇻🇬"], ["VI", "🇻🇮"], ["VN", "🇻🇳"], ["ZA", "🇿🇦"]])
+
+function json2info(cnt, paras) {
+    var res = "------------------------------"
+    cnt = JSON.parse(cnt)
+    for (i = 0; i < paras.length; i++) {
+        cnt[paras[i]] = paras[i] == "country_code" ? cnt[paras[i]] + " ⟦" + flags.get(cnt[paras[i]].toUpperCase()) + "⟧" : cnt[paras[i]]
+        res = cnt[paras[i]] ? res + "</br><b>" + "<font  color=>" + paran[i] + "</font> : " + "</b>" + "<font  color=>" + cnt[paras[i]] + "</font></br>" : res
+    }
+    res = "</br>" + "<font color=#6959CD>" + "<b>节点</b> ➟ " + $environment.params + "</font>" + res + "------------------------------"
+    res = `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` + res + `</p>`
+    return res
 }
-
-geoInfo();
