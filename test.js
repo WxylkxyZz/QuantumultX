@@ -1,1 +1,32 @@
-console.log($environment.params)
+ /***
+  [task_local]
+  event-interaction https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/geo_location.js, tag=GeoIP 查询, img-url=location.fill.viewfinder.system
+  
+  @XIAO_KOP
+
+  **/
+
+// var content= `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: bold">` + response.body + `</p>`;
+
+  var url = "https://api.ip.sb/geoip"
+  var opts = {
+      policy: $environment.params
+  };
+  var myRequest = {
+      url: url,
+      opts: opts,
+      timeout: 4000
+  };
+ 
+  var message = ""
+  const paras = ["ip","isp","country_code","city"]
+  const paran = ["IP","ISP","地区","城市"]
+  $task.fetch(myRequest).then(response => {
+    message = response? response.body : ""
+    $notify("Title", "Subtitle", response.body); // Success!
+    $done();
+}, reason => {
+    // reason.error
+    $notify("Title", "Subtitle", reason.error); // Error!
+    $done();
+});
