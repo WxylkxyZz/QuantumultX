@@ -9,10 +9,9 @@
   };
  
   var message = ""
-  const paras = ["ip","isp","country_code","city"]
-  const paran = ["IP","ISP","地区","城市"]
+
   $task.fetch(myRequest).then(response => {
-    message = response? stringify_info(response.body) : ""
+    message = response? stringify_info(JSON.stringify(response.body)) : ""
       $done({"title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
   }, reason => {
     message = "</br></br>🛑 查询超时"
