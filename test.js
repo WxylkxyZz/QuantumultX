@@ -1,9 +1,11 @@
 let message = "";
 const url = "https: //api.ip.sb/geoip";
 const headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36'};
+var method = "GET";
 const myRequest = {
     url: url,
     headers: headers,
+    method: method,
     opts: {policy: $environment.params},
     timeout: 3000
 };
