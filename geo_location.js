@@ -21,10 +21,31 @@ const flags = new Map([["AC", "🇦🇨"], ["AE", "🇦🇪"], ["AF", "🇦🇫"
 function stringify_info(res) {
     res = JSON.parse(res);
     return `
-  "IP": ${res["ip"]}<br>
-  "ISP": ${res["isp"]}<br>
-  "City": ${res["city"]}<br>
-  "Region": ${res["region"]}<br>
-  "Country": ${res["country"]}${flags.get(res["country_code"].toUpperCase())}
-  `;
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+        .container {
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .info {
+            margin-bottom: 10px;
+        }
+        .label {
+            font-weight: bold;
+        }
+    </style>
+    <div class="container">
+        <div class="info"><span class="label">IP:</span> ${res["ip"]}</div>
+        <div class="info"><span class="label">ISP:</span> ${res["isp"]}</div>
+        <div class="info"><span class="label">City:</span> ${res["city"]}</div>
+        <div class="info"><span class="label">Region:</span> ${res["region"]}</div>
+        <div class="info"><span class="label">Country:</span> ${res["country"]} ${flag}</div>
+    </div>
+    `;
 }
