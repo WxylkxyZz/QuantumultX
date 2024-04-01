@@ -9,7 +9,7 @@ const myRequest = {
 
 $task.fetch(myRequest).then(response => {
     message = response ? stringify_info(response.body) : "";
-    $done({"Title": "    🔎 IP.SB 查询结果", "htmlMessage": message});
+    $done({"title": "🔎 IP.SB 查询结果", "htmlMessage": message});
 }, reason => {
     message = `🛑 查询超时`
     $done({"title": "🔎 IP.SB 查询结果", "htmlMessage": message});
@@ -21,10 +21,10 @@ const flags = new Map([["AC", "🇦🇨"], ["AE", "🇦🇪"], ["AF", "🇦🇫"
 function stringify_info(res) {
     res = JSON.parse(res);
     return `
-  "IP": ${res["ip"]}<br>
-  "ISP": ${res["isp"]}<br>
-  "City": ${res["city"]}<br>
-  "Region": ${res["region"]}<br>
-  "Country": ${res["country"]}${flags.get(res["country_code"].toUpperCase())}
+  IP: ${res["ip"]}<br>
+  ISP: ${res["isp"]}<br>
+  City: ${res["city"]}<br>
+  Region: ${res["region"]}<br>
+  Country: ${res["country"]} ${flags.get(res["country_code"].toUpperCase())}
   `;
 }
